@@ -2,18 +2,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-// const VALUES = [
-//   'Nova Iorque',
-//   'Roma',
-//   'Londres',
-//   'Istambul',
-//   'Paris',
-//   'Rio de Janeiro',
-// ] as const
+function createUtcDateForIso(dateString: string): number {
+  const offset = new Date().getTimezoneOffset()
+  const myDate = Date.parse(dateString) - offset * 60 * 1000
+  return myDate
+}
 
 const schema = z.object({
-  initialDate: z.date(),
-  finalDate: z.date(),
+  initialDate: z.number().min(1, 'Escolha a data de ida.'),
+  finalDate: z.number().min(1, 'Escolha a data de retorno.'),
   adultPassengers: z
     .number({
       errorMap: () => {
@@ -56,7 +53,11 @@ export const FormCheckout = () => {
             Data de ida
           </label>
           <input
-            {...register('initialDate')}
+            {...register('initialDate', {
+              setValueAs: (value: string) => {
+                return createUtcDateForIso(value)
+              },
+            })}
             id="initialDate"
             type="date"
             className=" border-round p-3 border-1 border-400"
@@ -67,7 +68,11 @@ export const FormCheckout = () => {
             Data de volta
           </label>
           <input
-            {...register('finalDate')}
+            {...register('finalDate', {
+              setValueAs: (value: string) => {
+                return createUtcDateForIso(value)
+              },
+            })}
             id="finalDate"
             type="date"
             className=" border-round p-3 border-1 border-400"
