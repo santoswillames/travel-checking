@@ -12,14 +12,20 @@ const schema = z
   .object({
     initialDate: z
       .number()
-      .min(1, 'Escolha a data de ida.')
+      .positive('Escolha a data de ida.')
       .refine(
-        (val) => val > createUtcDateForIso(new Date().toLocaleDateString()),
+        (val) => {
+          const today = String(new Date())
+          console.log('valor q vem', val)
+          console.log('valor q compara', createUtcDateForIso(today))
+          return val > createUtcDateForIso(today)
+        },
         {
-          message: 'A data de ida não pode ser anterior a data de hoje',
+          message:
+            'A data de ida não pode ser anterior ou igual a data de hoje',
         },
       ),
-    finalDate: z.number().min(1, 'Escolha a data de retorno.'),
+    finalDate: z.number().positive('Escolha a data de retorno.'),
     adultPassengers: z
       .number({
         errorMap: () => {
@@ -68,6 +74,7 @@ export const FormCheckout = () => {
           <input
             {...register('initialDate', {
               setValueAs: (value: string) => {
+                if (!value) return -1
                 return createUtcDateForIso(value)
               },
             })}
@@ -83,6 +90,7 @@ export const FormCheckout = () => {
           <input
             {...register('finalDate', {
               setValueAs: (value: string) => {
+                if (!value) return -1
                 return createUtcDateForIso(value)
               },
             })}
