@@ -8,24 +8,37 @@ function createUtcDateForIso(dateString: string): number {
   return myDate
 }
 
-const schema = z.object({
-  initialDate: z.number().min(1, 'Escolha a data de ida.'),
-  finalDate: z.number().min(1, 'Escolha a data de retorno.'),
-  adultPassengers: z
-    .number({
-      errorMap: () => {
-        return { message: 'Informe um número de passageiro' }
-      },
-    })
-    .positive('Informe pelo menos um passageiro adulto'),
-  kidsPassengers: z
-    .number()
-    .nonnegative('O número de crianças não pode ser menor que 0'),
-  username: z.string().min(1, 'É necessário enviar um nome'),
-  userEmail: z.string().email('Insira um email válido'),
-  origin: z.string().min(1, 'Esta campo é obrigatório'),
-  destiny: z.string().min(1, 'Esta campo é obrigatório'),
-})
+const schema = z
+  .object({
+    initialDate: z
+      .number()
+      .min(1, 'Escolha a data de ida.')
+      .refine(
+        (val) => val > createUtcDateForIso(new Date().toLocaleDateString()),
+        {
+          message: 'A data de ida não pode ser anterior a data de hoje',
+        },
+      ),
+    finalDate: z.number().min(1, 'Escolha a data de retorno.'),
+    adultPassengers: z
+      .number({
+        errorMap: () => {
+          return { message: 'Informe um número de passageiro' }
+        },
+      })
+      .positive('Informe pelo menos um passageiro adulto'),
+    kidsPassengers: z
+      .number()
+      .nonnegative('O número de crianças não pode ser menor que 0'),
+    username: z.string().min(1, 'É necessário enviar um nome'),
+    userEmail: z.string().email('Insira um email válido'),
+    origin: z.string().min(1, 'Esta campo é obrigatório'),
+    destiny: z.string().min(1, 'Esta campo é obrigatório'),
+  })
+  .refine((data) => data.finalDate > data.initialDate, {
+    message: 'A data de volta não pode ser anterior a data de ida.',
+    path: ['finalDate'],
+  })
 
 type FormProps = z.infer<typeof schema>
 
