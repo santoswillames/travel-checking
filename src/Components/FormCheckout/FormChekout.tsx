@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { Store } from 'react-notifications-component'
 import { z } from 'zod'
 
 function createUtcDateForIso(dateString: string): number {
@@ -15,14 +16,20 @@ const schema = z
       .positive('Escolha a data de ida.')
       .refine(
         (val) => {
-          const today = String(new Date())
-          console.log('valor q vem', val)
-          console.log('valor q compara', createUtcDateForIso(today))
-          return val > createUtcDateForIso(today)
+          const today = new Date()
+          const td = new Intl.DateTimeFormat('pt-BR', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+          })
+            .format(today)
+            .split('/')
+            .reverse()
+            .join('-')
+          return val >= createUtcDateForIso(td)
         },
         {
-          message:
-            'A data de ida não pode ser anterior ou igual a data de hoje',
+          message: 'A data de ida não pode ser anterior a data atual',
         },
       ),
     finalDate: z.number().positive('Escolha a data de retorno.'),
@@ -38,10 +45,10 @@ const schema = z
       .nonnegative('O número de crianças não pode ser menor que 0'),
     username: z.string().min(1, 'É necessário enviar um nome'),
     userEmail: z.string().email('Insira um email válido'),
-    origin: z.string().min(1, 'Esta campo é obrigatório'),
-    destiny: z.string().min(1, 'Esta campo é obrigatório'),
+    origin: z.string().min(1, 'Este campo é obrigatório'),
+    destiny: z.string().min(1, 'Este campo é obrigatório'),
   })
-  .refine((data) => data.finalDate > data.initialDate, {
+  .refine((data) => data.finalDate >= data.initialDate, {
     message: 'A data de volta não pode ser anterior a data de ida.',
     path: ['finalDate'],
   })
@@ -57,9 +64,24 @@ export const FormCheckout = () => {
     mode: 'all',
     resolver: zodResolver(schema),
   })
-
   console.log(errors)
-  const handleForm = (data: FormProps) => console.log({ data })
+
+  const handleForm = (data: FormProps) => {
+    Store.addNotification({
+      title: 'Sucesso!',
+      message: 'Seu checking foi realizado com sucesso',
+      type: 'success',
+      insert: 'top',
+      container: 'top-center',
+      animationIn: ['animate__animated', 'animate__fadeIn'],
+      animationOut: ['animate__animated', 'animate__fadeOut'],
+      dismiss: {
+        duration: 5000,
+        onScreen: true,
+      },
+    })
+    console.log({ data })
+  }
 
   return (
     <form
