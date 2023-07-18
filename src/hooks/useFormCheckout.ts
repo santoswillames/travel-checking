@@ -14,7 +14,6 @@ export const useFormCheckout = () => {
     mode: 'all',
     resolver: zodResolver(schema),
   })
-  console.log(errors)
 
   const handleForm = (data: FormProps) => {
     Store.addNotification({
