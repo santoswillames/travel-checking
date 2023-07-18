@@ -5,6 +5,7 @@ import { schema } from '../Components/FormCheckout/schema'
 import { FormProps } from '../Components/FormCheckout/types'
 
 export const useFormCheckout = () => {
+  // Lib que recebe os dados dos inputs
   const {
     handleSubmit,
     register,
@@ -15,6 +16,7 @@ export const useFormCheckout = () => {
     resolver: zodResolver(schema),
   })
 
+  // Função que envia os dados e ativa a notificação
   const handleForm = (data: FormProps) => {
     Store.addNotification({
       title: 'Sucesso!',

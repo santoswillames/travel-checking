@@ -1,11 +1,7 @@
-import { InputHTMLAttributes, forwardRef } from 'react'
+import { forwardRef } from 'react'
+import { InputProps } from '../types'
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
-  label?: string
-  helperText?: string
-  id: string
-  describedby?: string
-}
+// Componente de input
 
 // eslint-disable-next-line react/display-name
 export const InputFormCheckout = forwardRef<HTMLInputElement, InputProps>(

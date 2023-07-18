@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { createUtcDateForIso } from '../../utils/createDateIso'
 
+// Schema para validação dos dados inseridos nos inputs
 export const schema = z
   .object({
     initialDate: z

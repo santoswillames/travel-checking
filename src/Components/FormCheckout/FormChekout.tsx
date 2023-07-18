@@ -2,6 +2,8 @@ import { createUtcDateForIso } from '../../utils/createDateIso'
 import { useFormCheckout } from '../../hooks/useFormCheckout'
 import { InputFormCheckout } from './InputFormCheckout'
 
+// Componente de formulário
+
 export const FormCheckout = () => {
   const { errors, register, handleForm, handleSubmit } = useFormCheckout()
 
