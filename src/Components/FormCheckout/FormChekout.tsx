@@ -60,6 +60,7 @@ export const FormCheckout = () => {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
   } = useForm<FormProps>({
     mode: 'all',
     resolver: zodResolver(schema),
@@ -81,6 +82,7 @@ export const FormCheckout = () => {
       },
     })
     console.log({ data })
+    reset()
   }
 
   return (
@@ -102,8 +104,13 @@ export const FormCheckout = () => {
             })}
             id="initialDate"
             type="date"
-            className=" border-round p-3 border-1 border-400"
+            className={` border-round p-3 border-1 ${
+              !errors.initialDate ? 'border-400' : 'border-red-600'
+            }`}
           />
+          {errors.initialDate?.message && (
+            <small className="text-red-600">{errors.initialDate.message}</small>
+          )}
         </div>
         <div className="flex flex-column gap-2">
           <label htmlFor="finalDate" className="font-semibold text-left">
@@ -118,8 +125,13 @@ export const FormCheckout = () => {
             })}
             id="finalDate"
             type="date"
-            className=" border-round p-3 border-1 border-400"
+            className={` border-round p-3 border-1 ${
+              !errors.finalDate ? 'border-400' : 'border-red-600'
+            }`}
           />
+          {errors.finalDate?.message && (
+            <small className="text-red-600">{errors.finalDate.message}</small>
+          )}
         </div>
       </div>
 
@@ -141,8 +153,15 @@ export const FormCheckout = () => {
               })}
               type="number"
               id="adultPassengers"
-              className=" border-round p-3 border-1 border-400"
+              className={` border-round p-3 border-1 ${
+                !errors.adultPassengers ? 'border-400' : 'border-red-600'
+              }`}
             />
+            {errors.adultPassengers?.message && (
+              <small className="text-red-600">
+                {errors.adultPassengers.message}
+              </small>
+            )}
           </div>
           <div className="flex flex-column gap-2">
             <label htmlFor="kidsPassengers" className="font-semibold text-left">
@@ -160,8 +179,15 @@ export const FormCheckout = () => {
               })}
               type="number"
               id="kidsPassengers"
-              className=" border-round p-3 border-1 border-400"
+              className={` border-round p-3 border-1 ${
+                !errors.kidsPassengers ? 'border-400' : 'border-red-600'
+              }`}
             />
+            {errors.kidsPassengers?.message && (
+              <small className="text-red-600">
+                {errors.kidsPassengers.message}
+              </small>
+            )}
           </div>
         </div>
       </div>
@@ -175,11 +201,16 @@ export const FormCheckout = () => {
           type="text"
           id="username"
           aria-describedby="username-help"
-          className=" border-round p-3 border-1 border-400"
+          className={` border-round p-3 border-1 ${
+            !errors.username ? 'border-400' : 'border-red-600'
+          }`}
         />
         <small id="username-help" className="text-left">
           Nome do passageiro principal
         </small>
+        {errors.username?.message && (
+          <small className="text-red-600">{errors.username.message}</small>
+        )}
       </div>
 
       <div className="flex flex-column gap-2 ">
@@ -191,11 +222,16 @@ export const FormCheckout = () => {
           id="userEmail"
           aria-describedby="userEmail-help"
           placeholder="email@exemplo.com"
-          className=" border-round p-3 border-1 border-400"
+          className={` border-round p-3 border-1 ${
+            !errors.userEmail ? 'border-400' : 'border-red-600'
+          }`}
         />
         <small id="userEmail-help" className="text-left">
           E-mail do passageiro principal
         </small>
+        {errors.userEmail?.message && (
+          <small className="text-red-600">{errors.userEmail.message}</small>
+        )}
       </div>
 
       <div className="flex flex-column sm:flex-row gap-4 p-fluid justify-content-center sm:justify-content-between">
@@ -207,8 +243,13 @@ export const FormCheckout = () => {
             {...register('origin')}
             type="text"
             id="origin"
-            className=" border-round p-3 border-1 border-400"
+            className={` border-round p-3 border-1 ${
+              !errors.origin ? 'border-400' : 'border-red-600'
+            }`}
           />
+          {errors.origin?.message && (
+            <small className="text-red-600">{errors.origin.message}</small>
+          )}
         </div>
 
         <div className="flex flex-column gap-2  justify-content-center sm:justify-content-end">
@@ -219,8 +260,13 @@ export const FormCheckout = () => {
             {...register('destiny')}
             type="text"
             id="destiny"
-            className=" border-round p-3 border-1 border-400"
+            className={` border-round p-3 border-1 ${
+              !errors.destiny ? 'border-400' : 'border-red-600'
+            }`}
           />
+          {errors.destiny?.message && (
+            <small className="text-red-600">{errors.destiny.message}</small>
+          )}
         </div>
       </div>
       <div className="card flex justify-content-center sm:justify-content-end">
