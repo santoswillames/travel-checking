@@ -28,7 +28,9 @@ export const FormCheckout = () => {
             }`}
           />
           {errors.initialDate?.message && (
-            <small className="text-red-600">{errors.initialDate.message}</small>
+            <small className="text-red-600 text-left">
+              {errors.initialDate.message}
+            </small>
           )}
         </div>
         <div className="flex flex-column gap-2">
@@ -49,7 +51,9 @@ export const FormCheckout = () => {
             }`}
           />
           {errors.finalDate?.message && (
-            <small className="text-red-600">{errors.finalDate.message}</small>
+            <small className="text-red-600 text-left">
+              {errors.finalDate.message}
+            </small>
           )}
         </div>
       </div>
@@ -77,7 +81,7 @@ export const FormCheckout = () => {
               }`}
             />
             {errors.adultPassengers?.message && (
-              <small className="text-red-600">
+              <small className="text-red-600 text-left">
                 {errors.adultPassengers.message}
               </small>
             )}
@@ -103,7 +107,7 @@ export const FormCheckout = () => {
               }`}
             />
             {errors.kidsPassengers?.message && (
-              <small className="text-red-600">
+              <small className="text-red-600 text-left">
                 {errors.kidsPassengers.message}
               </small>
             )}
@@ -128,7 +132,9 @@ export const FormCheckout = () => {
           Nome do passageiro principal
         </small>
         {errors.username?.message && (
-          <small className="text-red-600">{errors.username.message}</small>
+          <small className="text-red-600 text-left">
+            {errors.username.message}
+          </small>
         )}
       </div>
 
@@ -149,7 +155,9 @@ export const FormCheckout = () => {
           E-mail do passageiro principal
         </small>
         {errors.userEmail?.message && (
-          <small className="text-red-600">{errors.userEmail.message}</small>
+          <small className="text-red-600 text-left">
+            {errors.userEmail.message}
+          </small>
         )}
       </div>
 
@@ -167,7 +175,9 @@ export const FormCheckout = () => {
             }`}
           />
           {errors.origin?.message && (
-            <small className="text-red-600">{errors.origin.message}</small>
+            <small className="text-red-600 text-left">
+              {errors.origin.message}
+            </small>
           )}
         </div>
 
@@ -184,7 +194,9 @@ export const FormCheckout = () => {
             }`}
           />
           {errors.destiny?.message && (
-            <small className="text-red-600">{errors.destiny.message}</small>
+            <small className="text-red-600 text-left">
+              {errors.destiny.message}
+            </small>
           )}
         </div>
       </div>
